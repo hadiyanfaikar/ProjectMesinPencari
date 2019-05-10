@@ -180,12 +180,13 @@ public class SearchEngineGUI extends javax.swing.JFrame {
                                 .addComponent(CariButton))
                             .addComponent(jScrollPane2)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(109, 109, 109)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(263, 263, 263)
                         .addComponent(jLabel1)))
                 .addContainerGap(21, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,8 +213,8 @@ public class SearchEngineGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(222, Short.MAX_VALUE))
         );
 
         pack();
@@ -238,13 +239,13 @@ public class SearchEngineGUI extends javax.swing.JFrame {
 
     private void SimpanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SimpanButtonActionPerformed
         // TODO add your handling code here:
-        int idDokumen = Integer.parseInt(IDTextField.getText());
-        String kontent = ContentTextArea.getText();
+        int idDoc = Integer.parseInt(IDTextField.getText());
+        String content = ContentTextArea.getText();
         Document doc = new Document();
-        doc.setContent(kontent);
-        doc.setId(idDokumen);
+        doc.setContent(content);
+        doc.setId(idDoc);
         dokumen.add(doc);
-        index.addNewDocument(new Document(idDokumen, kontent));
+        index.addNewDocument(new Document(idDoc, content));
         IDTextField.setText(String.valueOf(Integer.parseInt(IDTextField.getText()) + 1));
         ContentTextArea.setText("");
         JOptionPane.showMessageDialog(rootPane, "Sukses Di Tambahkan");

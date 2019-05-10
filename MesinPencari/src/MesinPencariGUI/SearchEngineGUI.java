@@ -6,7 +6,15 @@
 package MesinPencariGUI;
 
 import Model.*;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -49,6 +57,11 @@ public class SearchEngineGUI extends javax.swing.JFrame {
         QueryTable = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         ContentTextArea = new javax.swing.JTextArea();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        AddDocumentMenuItem = new javax.swing.JMenuItem();
+        ExitMenuItem = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,6 +72,13 @@ public class SearchEngineGUI extends javax.swing.JFrame {
         IDLabel.setText("ID Document");
 
         ContentLabel.setText("Content");
+
+        IDTextField.setText("1");
+        IDTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IDTextFieldActionPerformed(evt);
+            }
+        });
 
         SimpanButton.setText("SIMPAN");
         SimpanButton.addActionListener(new java.awt.event.ActionListener() {
@@ -103,19 +123,35 @@ public class SearchEngineGUI extends javax.swing.JFrame {
         ContentTextArea.setRows(5);
         jScrollPane2.setViewportView(ContentTextArea);
 
+        jMenu1.setText("File");
+
+        AddDocumentMenuItem.setText("Add Document");
+        AddDocumentMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddDocumentMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(AddDocumentMenuItem);
+
+        ExitMenuItem.setText("Exit");
+        ExitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExitMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(ExitMenuItem);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(234, 234, 234))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(260, 260, 260))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -140,6 +176,15 @@ public class SearchEngineGUI extends javax.swing.JFrame {
                         .addGap(109, 109, 109)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(37, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(260, 260, 260))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(246, 246, 246))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,7 +212,7 @@ public class SearchEngineGUI extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(99, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
         pack();
@@ -210,6 +255,40 @@ public class SearchEngineGUI extends javax.swing.JFrame {
         ContentTextArea.setText(null);
     }//GEN-LAST:event_BatalButtonActionPerformed
 
+    private void IDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_IDTextFieldActionPerformed
+
+    private void AddDocumentMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddDocumentMenuItemActionPerformed
+        // TODO add your handling code here:
+        JFileChooser jfc = new JFileChooser();
+        jfc.showOpenDialog(null);
+
+        File file = jfc.getSelectedFile();
+        String dir = file.getAbsolutePath();
+        ContentTextArea.setText(null);
+        String path = dir;
+        File files = new File(path);
+        try {
+            FileInputStream fstream = new FileInputStream(files);
+            DataInputStream in = new DataInputStream(fstream);
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String strLine;
+            while ((strLine = br.readLine()) != null) {
+                StringTokenizer st = new StringTokenizer(strLine, "");
+                ContentTextArea.setText(ContentTextArea.getText() + st.nextToken() + "\n");
+            }
+            in.close();
+        } catch (IOException e) {
+            System.out.println("Error :" + e.getMessage());
+        }
+    }//GEN-LAST:event_AddDocumentMenuItemActionPerformed
+
+    private void ExitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitMenuItemActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_ExitMenuItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -246,10 +325,12 @@ public class SearchEngineGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem AddDocumentMenuItem;
     private javax.swing.JButton BatalButton;
     private javax.swing.JButton CariButton;
     private javax.swing.JLabel ContentLabel;
     private javax.swing.JTextArea ContentTextArea;
+    private javax.swing.JMenuItem ExitMenuItem;
     private javax.swing.JLabel IDLabel;
     private javax.swing.JTextField IDTextField;
     private javax.swing.JLabel QueryLabel;
@@ -258,6 +339,9 @@ public class SearchEngineGUI extends javax.swing.JFrame {
     private javax.swing.JButton SimpanButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables

@@ -5,11 +5,19 @@
  */
 package MesinPencariGUI;
 
+import Model.*;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Tri
  */
 public class SearchEngineGUI extends javax.swing.JFrame {
+
+    ArrayList<Document> dokumen = new ArrayList<>();
+    InvertedIndex index = new InvertedIndex();
 
     /**
      * Creates new form SearchEngineGUI
@@ -53,12 +61,27 @@ public class SearchEngineGUI extends javax.swing.JFrame {
         ContentLabel.setText("Content");
 
         SimpanButton.setText("SIMPAN");
+        SimpanButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SimpanButtonActionPerformed(evt);
+            }
+        });
 
         BatalButton.setText("BATAL");
+        BatalButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BatalButtonActionPerformed(evt);
+            }
+        });
 
         QueryLabel.setText("QUERY");
 
         CariButton.setText("CARI");
+        CariButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CariButtonActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel2.setText("HASIL PENCARIAN");
@@ -149,6 +172,43 @@ public class SearchEngineGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void CariButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CariButtonActionPerformed
+        // TODO add your handling code here:
+        index.makeDictionaryWithTermNumber();
+        ArrayList<SearchingResult> cari = index.SearchCosineSimilarity(QueryTextField.getText());
+        QueryTextField.setText("");
+        DefaultTableModel model = (DefaultTableModel) QueryTable.getModel();
+        int baris = model.getRowCount();
+        for (int i = 0; i < baris; i++) {
+            model.removeRow(0);
+        }
+        for (int i = 0; i < cari.size(); i++) {
+            Object[] item = {cari.get(i).getDocument().getId(), cari.get(i).getDocument().getContent(), cari.get(i).getSimilarity()};
+            model.addRow(item);
+        }
+
+    }//GEN-LAST:event_CariButtonActionPerformed
+
+    private void SimpanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SimpanButtonActionPerformed
+        // TODO add your handling code here:
+        int idDokumen = Integer.parseInt(IDTextField.getText());
+        String kontent = ContentTextArea.getText();
+        Document doc = new Document();
+        doc.setContent(kontent);
+        doc.setId(idDokumen);
+        dokumen.add(doc);
+        index.addNewDocument(new Document(idDokumen, kontent));
+        IDTextField.setText(String.valueOf(Integer.parseInt(IDTextField.getText()) + 1));
+        ContentTextArea.setText("");
+        JOptionPane.showMessageDialog(rootPane, "Sukses Di Tambahkan");
+    }//GEN-LAST:event_SimpanButtonActionPerformed
+
+    private void BatalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BatalButtonActionPerformed
+        // TODO add your handling code here:
+        IDTextField.setText("1");
+        ContentTextArea.setText(null);
+    }//GEN-LAST:event_BatalButtonActionPerformed
 
     /**
      * @param args the command line arguments

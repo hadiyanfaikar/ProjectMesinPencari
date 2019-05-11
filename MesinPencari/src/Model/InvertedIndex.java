@@ -190,7 +190,7 @@ public class InvertedIndex {
         }
     }
 
-    public void makeDictionaryWithTermNumber() {
+    public void MakeDictionaryWithTermNumber() {
         // cek deteksi ada term yang frekuensinya lebih dari 
         // 1 pada sebuah dokumen
         // buat posting list term terurut

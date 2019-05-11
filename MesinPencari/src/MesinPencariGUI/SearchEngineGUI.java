@@ -24,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class SearchEngineGUI extends javax.swing.JFrame {
 
-    ArrayList<Document> dokumen = new ArrayList<>();
+    ArrayList<Document> document = new ArrayList<>();
     InvertedIndex index = new InvertedIndex();
 
     /**
@@ -222,7 +222,7 @@ public class SearchEngineGUI extends javax.swing.JFrame {
 
     private void CariButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CariButtonActionPerformed
         // TODO add your handling code here:
-        index.makeDictionaryWithTermNumber();
+        index.MakeDictionaryWithTermNumber();
         ArrayList<SearchingResult> cari = index.SearchCosineSimilarity(QueryTextField.getText());
         QueryTextField.setText("");
         DefaultTableModel model = (DefaultTableModel) QueryTable.getModel();
@@ -230,7 +230,7 @@ public class SearchEngineGUI extends javax.swing.JFrame {
         for (int i = 0; i < baris; i++) {
             model.removeRow(0);
         }
-        for (int i = 0; i < cari.size(); i++) {
+        for (int i = 0; i <= cari.size(); i++) {
             Object[] item = {cari.get(i).getDocument().getId(), cari.get(i).getDocument().getContent(), cari.get(i).getSimilarity()};
             model.addRow(item);
         }
@@ -244,7 +244,7 @@ public class SearchEngineGUI extends javax.swing.JFrame {
         Document doc = new Document();
         doc.setContent(content);
         doc.setId(idDoc);
-        dokumen.add(doc);
+        document.add(doc);
         index.addNewDocument(new Document(idDoc, content));
         IDTextField.setText(String.valueOf(Integer.parseInt(IDTextField.getText()) + 1));
         ContentTextArea.setText("");

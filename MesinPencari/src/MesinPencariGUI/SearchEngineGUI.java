@@ -230,7 +230,7 @@ public class SearchEngineGUI extends javax.swing.JFrame {
         for (int i = 0; i < baris; i++) {
             model.removeRow(0);
         }
-        for (int i = 0; i <= cari.size(); i++) {
+        for (int i = 0; i < cari.size(); i++) {
             Object[] item = {cari.get(i).getDocument().getId(), cari.get(i).getDocument().getContent(), cari.get(i).getSimilarity()};
             model.addRow(item);
         }

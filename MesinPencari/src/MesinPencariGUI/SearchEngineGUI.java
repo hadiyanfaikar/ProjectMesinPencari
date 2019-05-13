@@ -14,10 +14,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Tri
- */
+
 public class SearchEngineGUI extends javax.swing.JFrame {
 
     ArrayList<Document> document = new ArrayList<>();
@@ -59,6 +56,7 @@ public class SearchEngineGUI extends javax.swing.JFrame {
         ExitMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("SEARCH ENGINE ");
 
         jLabel1.setFont(new java.awt.Font("Arial", 3, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 0));
@@ -110,13 +108,13 @@ public class SearchEngineGUI extends javax.swing.JFrame {
 
         QueryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "ID", "Content"
+                "ID", "Content", "Cosine Similarity"
             }
         ));
         jScrollPane1.setViewportView(QueryTable);
@@ -280,6 +278,7 @@ public class SearchEngineGUI extends javax.swing.JFrame {
         } catch (IOException e) {
             System.out.println("Error :" + e.getMessage());
         }
+        
     }//GEN-LAST:event_AddDocumentMenuItemActionPerformed
 
     private void ExitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitMenuItemActionPerformed

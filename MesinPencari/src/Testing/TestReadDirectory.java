@@ -36,7 +36,7 @@ public class TestReadDirectory {
                 ArrayList<Posting> post1 = index.MakeTFIDF(i);
                 ArrayList<Posting> post2 = index.MakeTFIDF(j);
                 double Cosine = index.getInnerProduct(post1, post2);
-                System.out.println("Hasil Cosine dari doc"+i+ " dan doc"+j+"= " + Cosine);
+                System.out.println("Hasil Cosine Similarity dari doc"+i+ " dan doc"+j+"= " + Cosine);
 
             }
         }

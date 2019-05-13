@@ -1,6 +1,9 @@
 package Model;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -25,6 +28,15 @@ public class Document implements Comparable<Document> {
     private int id;
     private String content; // atribut content yang dianalisis
     private String realContent; // atribut content asli
+    private String documentName;
+
+    public String getDocumentName() {
+        return documentName;
+    }
+
+    public void setDocumentName(String documentName) {
+        this.documentName = documentName;
+    }
 
     public Document() {
     }
@@ -42,6 +54,13 @@ public class Document implements Comparable<Document> {
         this.id = id;
         this.content = content;
         this.realContent = content;
+    }
+
+    public Document(int id, String content, String realContent, String documentName) {
+        this.id = id;
+        this.content = content;
+        this.realContent = content;
+        this.documentName = documentName;
     }
 
     /**
@@ -132,9 +151,25 @@ public class Document implements Comparable<Document> {
      * atribut content
      */
     public void readFile(int idDoc, File file) {
-        // simpan idDoc
-        this.id = idDoc;
-        // baca file
+        this.setId(idDoc);
+        String line = null;
+
+        try {
+            FileReader fileReader = new FileReader(file);
+
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            while ((line = bufferedReader.readLine()) != null) {
+                this.setContent(line);
+                this.setRealContent(line);
+            }
+
+            bufferedReader.close();
+        } catch (FileNotFoundException ex) {
+            System.out.println("File not Found.");
+        } catch (IOException ex) {
+            System.out.println(ex.toString());
+        }
     }
 
     @Override
@@ -181,12 +216,10 @@ public class Document implements Comparable<Document> {
         String text = content;
 //        System.out.println("Text = "+text);
         Version matchVersion = Version.LUCENE_7_7_0; // Substitute desired Lucene version for XY
-        Analyzer analyzer = new StandardAnalyzer();
+        Analyzer analyzer = new IndonesianAnalyzer();
         analyzer.setVersion(matchVersion);
         // buat token
-        TokenStream tokenStream = analyzer.tokenStream(
-                "myField",
-                new StringReader(text.trim()));
+        TokenStream tokenStream = analyzer.tokenStream("myField", new StringReader(text.trim()));
         // stemming
         tokenStream = new PorterStemFilter(tokenStream);
         // buat string baru tanpa stopword
@@ -202,6 +235,7 @@ public class Document implements Comparable<Document> {
             System.out.println("Exception: " + ex);
         }
         content = sb.toString();
+
     }
 
     public String getRealContent() {

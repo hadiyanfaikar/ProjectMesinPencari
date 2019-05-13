@@ -42,14 +42,9 @@ public class SearchEngineGUI extends javax.swing.JFrame {
         IDTextField = new javax.swing.JTextField();
         SimpanButton = new javax.swing.JButton();
         BatalButton = new javax.swing.JButton();
-        QueryLabel = new javax.swing.JLabel();
-        QueryTextField = new javax.swing.JTextField();
-        CariButton = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        QueryTable = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         ContentTextArea = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         AddDocumentMenuItem = new javax.swing.JMenuItem();
@@ -90,36 +85,17 @@ public class SearchEngineGUI extends javax.swing.JFrame {
             }
         });
 
-        QueryLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        QueryLabel.setText("QUERY");
-
-        CariButton.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
-        CariButton.setText("CARI");
-        CariButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CariButtonActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setFont(new java.awt.Font("Arial", 3, 24)); // NOI18N
-        jLabel2.setText("HASIL PENCARIAN QUERY");
-
-        QueryTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "ID", "Content", "Cosine Similarity"
-            }
-        ));
-        jScrollPane1.setViewportView(QueryTable);
-
         ContentTextArea.setColumns(20);
         ContentTextArea.setRows(5);
         jScrollPane2.setViewportView(ContentTextArea);
+
+        jButton1.setFont(new java.awt.Font("Arial", 3, 14)); // NOI18N
+        jButton1.setText("CARI QUERY");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
@@ -148,10 +124,6 @@ public class SearchEngineGUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(80, 80, 80))
@@ -159,24 +131,18 @@ public class SearchEngineGUI extends javax.swing.JFrame {
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(IDLabel)
-                    .addComponent(ContentLabel)
-                    .addComponent(QueryLabel))
+                    .addComponent(ContentLabel))
                 .addGap(88, 88, 88)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(IDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(SimpanButton)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(BatalButton))
-                        .addComponent(IDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(QueryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(CariButton))
-                        .addComponent(jScrollPane2)))
+                            .addComponent(BatalButton)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -195,38 +161,13 @@ public class SearchEngineGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SimpanButton)
-                    .addComponent(BatalButton))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(QueryLabel)
-                    .addComponent(QueryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CariButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                    .addComponent(BatalButton)
+                    .addComponent(jButton1))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void CariButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CariButtonActionPerformed
-        // TODO add your handling code here:
-        index.MakeDictionaryWithTermNumber();
-        ArrayList<SearchingResult> cari = index.SearchCosineSimilarity(QueryTextField.getText());
-        QueryTextField.setText("");
-        DefaultTableModel model = (DefaultTableModel) QueryTable.getModel();
-        int baris = model.getRowCount();
-        for (int i = 0; i < baris; i++) {
-            model.removeRow(0);
-        }
-        for (int i = 0; i < cari.size(); i++) {
-            Object[] item = {cari.get(i).getDocument().getId(), cari.get(i).getDocument().getContent(), cari.get(i).getSimilarity()};
-            model.addRow(item);
-        }
-
-    }//GEN-LAST:event_CariButtonActionPerformed
 
     private void SimpanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SimpanButtonActionPerformed
         // TODO add your handling code here:
@@ -283,6 +224,13 @@ public class SearchEngineGUI extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_ExitMenuItemActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Cari cr = new Cari();
+        cr.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -321,21 +269,16 @@ public class SearchEngineGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AddDocumentMenuItem;
     private javax.swing.JButton BatalButton;
-    private javax.swing.JButton CariButton;
     private javax.swing.JLabel ContentLabel;
     private javax.swing.JTextArea ContentTextArea;
     private javax.swing.JMenuItem ExitMenuItem;
     private javax.swing.JLabel IDLabel;
     private javax.swing.JTextField IDTextField;
-    private javax.swing.JLabel QueryLabel;
-    private javax.swing.JTable QueryTable;
-    private javax.swing.JTextField QueryTextField;
     private javax.swing.JButton SimpanButton;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

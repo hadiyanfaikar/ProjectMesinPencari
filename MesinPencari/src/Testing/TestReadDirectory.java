@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class TestReadDirectory {
     public static void main(String[] args) {
-        File dir = new File("Dokumen");
+        File dir = new File("Dokumen Undang-Undang");
         InvertedIndex index = new InvertedIndex();
         index.readDirectory(dir);
         ArrayList<Document> listDoc = index.getListOfDocument();
